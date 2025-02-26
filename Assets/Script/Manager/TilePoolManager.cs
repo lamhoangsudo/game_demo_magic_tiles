@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,6 +9,8 @@ public class TilePoolManager : MonoBehaviour
     [SerializeField] private int initialPoolSize = 10;
     [SerializeField] private int maxPoolSize = 20;
     private ObjectPool<GameObject> tilePool;
+    private HashSet<GameObject> activeTile = new();
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -21,18 +24,22 @@ public class TilePoolManager : MonoBehaviour
             maxPoolSize
             );
     }
+
     private GameObject CreateTile()
     {
-        return Instantiate(tile.tilePrefab);
+        GameObject tilePrefab = Instantiate(tile.tilePrefab, transform.position, Quaternion.identity);
+        return tilePrefab;
     }
 
     private void OnGetTile(GameObject tile)
     {
+        activeTile.Add(tile);
         tile.SetActive(true);
     }
 
     private void OnReleaseTile(GameObject tile)
     {
+        tile.transform.position = transform.position;
         tile.SetActive(false);
     }
 
@@ -48,6 +55,10 @@ public class TilePoolManager : MonoBehaviour
 
     public void ReturnTile(GameObject tile)
     {
-        tilePool.Release(tile);
+        if (activeTile.Contains(tile))
+        {
+            activeTile.Remove(tile);
+            tilePool.Release(tile);
+        }
     }
 }

@@ -9,6 +9,7 @@ public class TileData : MonoBehaviour
     [SerializeField] private TileDataSO tileDataSO;
     public float scoringLineTouchTime;
     public float playerTouchTime;
+    public bool canGetPoints = false;
     private void Update()
     {
         Fall();
@@ -21,6 +22,7 @@ public class TileData : MonoBehaviour
     {
         scoringLineTouchTime = 0;
         playerTouchTime = 0;
+        canGetPoints = false;
     }
     public void OnDestroy()
     {
@@ -30,5 +32,6 @@ public class TileData : MonoBehaviour
     private void OnDisable()
     {
         ResetData();
+        gameObject.SetActive(false);
     }
 }

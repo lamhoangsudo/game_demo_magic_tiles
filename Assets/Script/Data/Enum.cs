@@ -25,4 +25,18 @@ public static class Enum
         Good = 2,
         Perfect = 3,
     }
+    public enum Scene
+    {
+        MainMenuScene,
+        LoadingScene,
+        GamePlayScene,
+    }
+    public enum LevelState
+    {
+        Start,
+        CountDown,
+        Playing,
+        Finished,
+        Pause,
+    }
 }

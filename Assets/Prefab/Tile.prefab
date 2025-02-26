@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 9147560137283229607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9147560138149199785}
@@ -77,6 +77,7 @@ MonoBehaviour:
   tileDataSO: {fileID: 11400000, guid: e6ff7fd3deb61ae4787473f9fdec068b, type: 2}
   scoringLineTouchTime: 0
   playerTouchTime: 0
+  canGetPoints: 0
 --- !u!50 &3852851015551037708
 Rigidbody2D:
   serializedVersion: 4
@@ -97,7 +98,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &9147560138149199786
 GameObject:
   m_ObjectHideFlags: 0

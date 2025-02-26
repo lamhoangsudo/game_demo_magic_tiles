@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class DestroyLine : MonoBehaviour
 {
-    public event EventHandler OnTileTougchDestroyLine;
     private List<Collider2D> colliderInside = new();
     public Collider2D triggerCollider { get; private set; }
+    public event EventHandler OnTileTougchDestroyLine;
     private void Start()
     {
         triggerCollider = GetComponent<Collider2D>();
@@ -30,8 +30,7 @@ public class DestroyLine : MonoBehaviour
         triggerCollider.OverlapCollider(contactFilter2D, colliderInside);
         foreach (Collider2D collider in colliderInside)
         {
-            //
-            Destroy(collider.gameObject);
+            TilePoolManager.instance.ReturnTile(collider.gameObject);
         }
         colliderInside.Clear();
     }
