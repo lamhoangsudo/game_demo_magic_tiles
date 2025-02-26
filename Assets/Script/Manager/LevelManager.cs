@@ -74,15 +74,14 @@ public class LevelManager : MonoBehaviour
                 IsMusicFinished = audioSource.time >= audioSource.clip.length;
                 if (IsMusicFinished && IsAllNotesGone)
                 {
-                    OnLevelFinished?.Invoke(this, EventArgs.Empty);
                     levelState = Enum.LevelState.Finished;
                 }
                 break;
             case Enum.LevelState.Finished:
+                OnLevelFinished?.Invoke(this, EventArgs.Empty);
                 Time.timeScale = 0;
                 break;
             case Enum.LevelState.Pause:
-                Time.timeScale = 0;
                 break;
         }
     }
@@ -94,21 +93,23 @@ public class LevelManager : MonoBehaviour
 
     public void OnPause()
     {
-        if (levelState != Enum.LevelState.Finished) return;
-        levelState = Enum.LevelState.Pause;
-        if (!isPause)
+        if (levelState == Enum.LevelState.Playing || levelState == Enum.LevelState.Pause)
         {
-            isPause = true;
-            Time.timeScale = 0;
             levelState = Enum.LevelState.Pause;
-            OnLevelPauseAndUnPause?.Invoke(this, isPause);
-        }
-        else
-        {
-            isPause = false;
-            Time.timeScale = 1;
-            levelState = Enum.LevelState.Playing;
-            OnLevelPauseAndUnPause?.Invoke(this, isPause);
+            if (!isPause)
+            {
+                isPause = true;
+                Time.timeScale = 0;
+                levelState = Enum.LevelState.Pause;
+                OnLevelPauseAndUnPause?.Invoke(this, isPause);
+            }
+            else
+            {
+                isPause = false;
+                Time.timeScale = 1;
+                levelState = Enum.LevelState.Playing;
+                OnLevelPauseAndUnPause?.Invoke(this, isPause);
+            }
         }
     }
 }

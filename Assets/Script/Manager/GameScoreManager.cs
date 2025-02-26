@@ -14,8 +14,8 @@ public class GameScoreManager : MonoBehaviour
     [SerializeField] private ScoringLine scoringLine;
     public List<Collider2D> colliderInside { get; private set; } = new();
     public bool CanScore { get; private set; } = false;
-    public float currentPointNormalized { get; private set; } = 0;
-    private bool isLevelPlay = false;
+    private float currentPointNormalized = 0;
+    public event EventHandler<float> OnScoreChange;
 
     private void Awake()
     {
@@ -27,33 +27,12 @@ public class GameScoreManager : MonoBehaviour
         scoringLine.OnColliderInsideChange += ScoringLine_OnColliderInsideChange;
         PlayerInput.instance.OnTileTouched += PlayerInput_OnTileTouched;
         LevelManager.instance.OnLevelFinished += LevelManager_OnLevelFinished;
-        LevelManager.instance.OnLevelStartPlaying += LevelManager_OnLevelStartPlaying;
-        LevelManager.instance.OnLevelPauseAndUnPause += LevelManager_OnLevelPauseAndUnPause;
         CalculateTotalPoints();
-    }
-
-    private void LevelManager_OnLevelPauseAndUnPause(object sender, bool isLevelPlay)
-    {
-        this.isLevelPlay = isLevelPlay;
-    }
-
-    private void Update()
-    {
-        if (isLevelPlay)
-        {
-            CalculateCurrentPointNormalized();
-        }
-    }
-
-    private void LevelManager_OnLevelStartPlaying(object sender, EventArgs e)
-    {
-        isLevelPlay = true;
     }
 
     private void LevelManager_OnLevelFinished(object sender, EventArgs e)
     {
         StarRating();
-        isLevelPlay = false;
     }
 
     private void PlayerInput_OnTileTouched(object sender, List<TileData> tileTouchData)
@@ -66,6 +45,8 @@ public class GameScoreManager : MonoBehaviour
                 TilePoolManager.instance.ReturnTile(tile.gameObject);
             }
         }
+        CalculateCurrentPointNormalized();
+        OnScoreChange?.Invoke(this, currentPointNormalized);
     }
 
     private void ScoringLine_OnColliderInsideChange(object sender, List<Collider2D> colliderInside)

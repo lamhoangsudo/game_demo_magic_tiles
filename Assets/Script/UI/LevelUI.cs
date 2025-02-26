@@ -8,36 +8,22 @@ public class LevelUI : MonoBehaviour
 {
     [SerializeField] private Image bar;
     [SerializeField] private Button ButtonPause;
-    private bool isLevelPlaying = false;
     private void Start()
     {
-        LevelManager.instance.OnLevelStartPlaying += LevelManager_OnLevelStartPlaying;
-        LevelManager.instance.OnLevelFinished += LevelManager_OnLevelFinished;
         ButtonPause.onClick.AddListener(() =>
         {
             LevelManager.instance.OnPause();
         });
+        GameScoreManager.instance.OnScoreChange += GameScoreManager_OnScoreChange;
     }
 
-    private void LevelManager_OnLevelFinished(object sender, EventArgs e)
+    private void GameScoreManager_OnScoreChange(object sender, float currentPointNormalized)
     {
-        isLevelPlaying = false;
+        UpdateBar(currentPointNormalized);
     }
 
-    private void LevelManager_OnLevelStartPlaying(object sender, EventArgs e)
+    private void UpdateBar(float currentPointNormalized)
     {
-        isLevelPlaying = true;
-    }
-
-    private void Update()
-    {
-        if (isLevelPlaying)
-        {
-            UpdateBar();
-        }
-    }
-    private void UpdateBar()
-    {
-        bar.fillAmount = GameScoreManager.instance.currentPointNormalized/3;
+        bar.fillAmount = currentPointNormalized/3;
     }
 }

@@ -349,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &132410477
 RectTransform:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &330358455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1107,7 +1107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &471976023
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1931,7 +1931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &736489171
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2213,10 +2213,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 858428797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afcdfd9e03a4a6945a7906a7f05ebb17, type: 3}
+  m_Script: {fileID: 11500000, guid: d797e70a0b123044f81a28ed48d72be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <songData>k__BackingField: []
 --- !u!114 &858428801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2977,7 +2976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1126202637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3013,7 +3012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bar: {fileID: 603570785}
-  ButtonPause: {fileID: 0}
+  ButtonPause: {fileID: 1979859181}
 --- !u!1 &1175569770
 GameObject:
   m_ObjectHideFlags: 0
