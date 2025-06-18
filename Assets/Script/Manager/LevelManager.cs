@@ -28,7 +28,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         levelState = Enum.LevelState.Start;
-        totalNode = TxtAudacityToDataConverter.Instance.songData.Count;
+        totalNode = DataConverter.Instance.songData.Count;
         destroyLine.OnTileTougchDestroyLine += DestroyLine_OnTileTougchDestroyLine;
         PlayerInput.instance.OnStartCountDown += PlayerInput_OnStartCountDown;
         time = CountDownTimeMax;

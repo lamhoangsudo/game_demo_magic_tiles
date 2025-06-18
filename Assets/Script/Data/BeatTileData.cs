@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class BeatTileData
 {
-    public float startTime;
-    public float endTime;
+    public float time;
+    public int lane;
 }

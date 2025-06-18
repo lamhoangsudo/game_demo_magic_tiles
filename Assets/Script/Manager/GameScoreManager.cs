@@ -89,9 +89,9 @@ public class GameScoreManager : MonoBehaviour
 
     private void CalculateTotalPoints()
     {
-        sumPointNormal = (int)Enum.PointTouchType.Normal * TxtAudacityToDataConverter.Instance.songData.Count;
-        sumPointGood = (int)Enum.PointTouchType.Good * TxtAudacityToDataConverter.Instance.songData.Count;
-        sumPointPerfect = (int)Enum.PointTouchType.Perfect * TxtAudacityToDataConverter.Instance.songData.Count;
+        sumPointNormal = (int)Enum.PointTouchType.Normal * DataConverter.Instance.songData.Count;
+        sumPointGood = (int)Enum.PointTouchType.Good * DataConverter.Instance.songData.Count;
+        sumPointPerfect = (int)Enum.PointTouchType.Perfect * DataConverter.Instance.songData.Count;
     }
 
     private void StarRating()

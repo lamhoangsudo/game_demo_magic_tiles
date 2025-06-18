@@ -11,20 +11,19 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private List<BeatTileData> songData;
     [SerializeField] private int currentTileIndex;
     private bool isLevelPlaying = false;
-    private HashSet<GameObject> activeTile;
     private Vector3 currentSpawnPosition = Vector3.zero;
     private Vector3 lastSpawnPosition = Vector3.zero;
 
     private void Awake()
     {
         if (instance == null) instance = this;
-        songData = TxtAudacityToDataConverter.Instance.songData;
     }
 
     private void Start()
     {
         LevelManager.instance.OnLevelStartPlaying += LevelManager_OnLevelStartPlaying;
         LevelManager.instance.OnLevelPauseAndUnPause += LevelManager_OnLevelPauseAndUnPause;
+        songData = DataConverter.Instance.songData;
     }
 
     private void LevelManager_OnLevelPauseAndUnPause(object sender, bool isLevelPlaying)
@@ -49,18 +48,18 @@ public class SpawnManager : MonoBehaviour
 
     private void Update()
     {
-        if(currentTileIndex < songData.Count && audioSource.time >= songData[currentTileIndex].startTime && isLevelPlaying)
+        if(currentTileIndex < songData.Count && audioSource.time >= songData[currentTileIndex].time && isLevelPlaying)
         {
-            SpawnTile();
+            SpawnTile(currentTileIndex);
             currentTileIndex++;
         }
     }
 
-    private void SpawnTile()
+    private void SpawnTile(int currentTileIndex)
     {
         do
         {
-            currentSpawnPosition = spawnPosition[Random.Range(0, spawnPosition.Count)].position;
+            currentSpawnPosition = spawnPosition[songData[currentTileIndex].lane].position;
         }
         while(currentSpawnPosition == lastSpawnPosition);
         GameObject tile = TilePoolManager.instance.GetTile();
