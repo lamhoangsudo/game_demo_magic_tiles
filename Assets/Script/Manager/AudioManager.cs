@@ -56,4 +56,12 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.Stop();
     }
+    public bool IsSongFinished()
+    {
+        if(audioSource.time > 0)
+        {
+            return audioSource.time >= audioSource.clip.length;
+        }
+        return false;
+    }
 }

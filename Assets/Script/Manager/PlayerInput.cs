@@ -16,21 +16,24 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         if(isHit && !Singleton.InstanceGameScoreManager.CanScore) return;
-        foreach(Touch touch in Input.touches)
+        else
         {
-            if (touch.phase == TouchPhase.Began)
+            foreach (Touch touch in Input.touches)
             {
-                if(Singleton.InstanceLevelManager.levelState == Enum.LevelState.Start)
+                if (touch.phase == TouchPhase.Began)
                 {
-                    OnStartCountDown?.Invoke(this, EventArgs.Empty);
-                    return;
+                    if (Singleton.InstanceLevelManager.levelState == Enum.LevelState.Start)
+                    {
+                        OnStartCountDown?.Invoke(this, EventArgs.Empty);
+                        return;
+                    }
+                    if (Singleton.InstanceLevelManager.levelState != Enum.LevelState.Playing) return;
+                    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                    List<RaycastHit2D> raycastHit2DS = Physics2D.RaycastAll(touchPosition, Vector2.zero, 999f, layerMask).ToList();
+                    if (raycastHit2DS.Count <= 0 || raycastHit2DS.IsUnityNull()) return;
+                    TileTapped(raycastHit2DS);
+                    isHit = false;
                 }
-                if(Singleton.InstanceLevelManager.levelState != Enum.LevelState.Playing) return;
-                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-                List<RaycastHit2D> raycastHit2DS = Physics2D.RaycastAll(touchPosition, Vector2.zero, 999f, layerMask).ToList();
-                if (raycastHit2DS.Count <= 0 || raycastHit2DS.IsUnityNull()) return;
-                TileTapped(raycastHit2DS);
-                isHit = false;
             }
         }
     }

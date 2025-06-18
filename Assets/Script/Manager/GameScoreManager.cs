@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GameScoreManager : MonoBehaviour
@@ -14,21 +15,28 @@ public class GameScoreManager : MonoBehaviour
     public List<Collider2D> colliderInside { get; private set; } = new();
     public bool CanScore { get; private set; } = false;
     private float currentPointNormalized = 0;
-    public event EventHandler<float> OnScoreChange;
+    public event EventHandler<OnScoreChangeEventArgs> OnScoreChange;
     public event EventHandler<Enum.PointTouchType> OnTypeHit;
+    public class OnScoreChangeEventArgs : EventArgs
+    {
+        public int CurrentStar { get; set; }
+        public float CurrentPointNormalized { get; set; }
+    }
 
     private void Start()
     {
         scoringLine.OnColliderInsideChange += ScoringLine_OnColliderInsideChange;
         Singleton.InstancePlayerInput.OnTileTouched += PlayerInput_OnTileTouched;
-        Singleton.InstanceLevelManager.OnLevelFinished += LevelManager_OnLevelFinished;
+        //Singleton.InstanceLevelManager.OnDebug += InstanceLevelManager_OnDebug;
         CalculateTotalPoints();
     }
 
-    private void LevelManager_OnLevelFinished(object sender, EventArgs e)
-    {
-        StarRating();
-    }
+    //private void InstanceLevelManager_OnDebug(object sender, EventArgs e)
+    //{
+    //    currentPoint+= (int)Enum.PointTouchType.Perfect;
+    //    CalculateCurrentPointNormalized();
+    //    OnScoreChange?.Invoke(this, currentPointNormalized);
+    //}
 
     private void PlayerInput_OnTileTouched(object sender, List<TileData> tileTouchData)
     {
@@ -40,7 +48,11 @@ public class GameScoreManager : MonoBehaviour
             }
         }
         CalculateCurrentPointNormalized();
-        OnScoreChange?.Invoke(this, currentPointNormalized);
+        OnScoreChange?.Invoke(this, new OnScoreChangeEventArgs
+        {
+            CurrentPointNormalized = currentPointNormalized,
+            CurrentStar = star
+        });
     }
 
     private void ScoringLine_OnColliderInsideChange(object sender, List<Collider2D> colliderInside)
@@ -65,16 +77,19 @@ public class GameScoreManager : MonoBehaviour
             case < 0.1f:
                 //perfect
                 pontAdd = (int)Enum.PointTouchType.Perfect;
+                StarRating();
                 OnTypeHit?.Invoke(this, Enum.PointTouchType.Perfect);
                 break;
             case < 0.3f:
                 //good
                 pontAdd = (int)Enum.PointTouchType.Good;
+                StarRating();
                 OnTypeHit?.Invoke(this, Enum.PointTouchType.Good);
                 break;
             case >= 0.3f:
                 //nomal
                 pontAdd = (int)Enum.PointTouchType.Normal;
+                StarRating();
                 OnTypeHit?.Invoke(this, Enum.PointTouchType.Normal);
                 break;
         }
@@ -90,17 +105,23 @@ public class GameScoreManager : MonoBehaviour
 
     private void StarRating()
     {
-        if(currentPoint <= sumPointPerfect && currentPoint > sumPointGood)
+        float pointNormalized = currentPointNormalized / 3;
+        pointNormalized = math.clamp(pointNormalized, 0f, 1f); // Ensure the value is between 0 and 1
+        if (pointNormalized >= 1f / 3f && pointNormalized < 2f / 3f)
         {
-            star = (int)Enum.StarRatingType.Perfect;
+            star = 1;
         }
-        else if(currentPoint <= sumPointGood && currentPoint > sumPointNormal)
+        else if (pointNormalized >= 2f / 3f && pointNormalized < 1f)
         {
-            star = (int)Enum.StarRatingType.Good;
+            star = 2;
         }
-        else if (currentPoint <= sumPointNormal && currentPoint > 0)
+        else if (pointNormalized >= 1f)
         {
-            star = (int)Enum.StarRatingType.Normal;
+            star = 3;
+        }
+        else
+        {
+            return;
         }
     }
 
@@ -118,5 +139,13 @@ public class GameScoreManager : MonoBehaviour
         {
             currentPointNormalized = (float)currentPoint / sumPointNormal * 1;
         }
+    }
+    public string GetStringPoint()
+    {
+        return $"Score: {currentPoint}/{sumPointPerfect}";
+    }
+    public string GetStringStar()
+    {
+        return $"Star: {Singleton.InstanceGameScoreManager.star}";
     }
 }

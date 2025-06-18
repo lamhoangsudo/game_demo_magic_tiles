@@ -20,8 +20,6 @@ public class GameOverUI : MonoBehaviour
         {
             LoadScene.Load(Enum.Scene.MainMenuScene);
         });
-        scoreText.text = Singleton.InstanceLevelManager.GetStringPoint();
-        starText.text = $"Star: {Singleton.InstanceGameScoreManager.star}";
         ShowAndHide(false);
         Singleton.InstanceLevelManager.OnLevelFinished += LevelManager_OnLevelFinished;
     }
@@ -34,5 +32,7 @@ public class GameOverUI : MonoBehaviour
     private void ShowAndHide(bool check)
     {
         gameObject.SetActive(check);
+        scoreText.text = Singleton.InstanceGameScoreManager.GetStringPoint();
+        starText.text = Singleton.InstanceGameScoreManager.GetStringStar();
     }
 }

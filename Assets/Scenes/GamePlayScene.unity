@@ -349,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &132410477
 RectTransform:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &330358455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -761,7 +761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367220294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.06, z: 0}
+  m_LocalPosition: {x: 0, y: -10.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -984,7 +984,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f3c79a2c0e767489c2762f373faed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starIcons: []
+  starIcons:
+  - {fileID: 1033827001}
+  - {fileID: 1893942140}
+  - {fileID: 741435248}
+  starIconsAnimations:
+  - {fileID: 1033827005}
+  - {fileID: 1893942144}
+  - {fileID: 741435252}
 --- !u!1 &404660531
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,7 +1297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &471976023
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1868,7 +1875,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2114,7 +2121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &736489171
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2503,7 +2510,6 @@ MonoBehaviour:
   CountDownTimeMax: 3
   destroyLine: {fileID: 367220298}
   scoringLine: {fileID: 524085422}
-  audioSource: {fileID: 279262058}
 --- !u!114 &858428802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4363,13 +4369,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b6c0cff7b141c47b8f84f1d92d80e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPosition:
+  spawnPositions:
   - {fileID: 906918191}
   - {fileID: 2078873733}
   - {fileID: 1526157076}
   - {fileID: 404660532}
   tile: {fileID: 11400000, guid: e6ff7fd3deb61ae4787473f9fdec068b, type: 2}
+  currentTileIndex: 0
   isRamdomSpawned: 0
+  isLevelPlaying: 0
 --- !u!114 &1739196098
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,7 @@ public class LevelUI : MonoBehaviour
         Singleton.InstanceGameScoreManager.OnScoreChange += GameScoreManager_OnScoreChange;
         Singleton.InstanceComboManager.OnComboCountChanged += ComboManager_OnComboCountChanged;
         textComboCount.gameObject.SetActive(false);
+        bar.fillAmount = 0f;
     }
 
     private void ComboManager_OnComboCountChanged(object sender, ComboManager.OnComboCountChangedEventArgs combo)
@@ -26,14 +28,14 @@ public class LevelUI : MonoBehaviour
         UpdateTextCombo(combo.ComboCount, combo.HitType);
     }
 
-    private void GameScoreManager_OnScoreChange(object sender, float currentPointNormalized)
+    private void GameScoreManager_OnScoreChange(object sender, GameScoreManager.OnScoreChangeEventArgs currentPointNormalized)
     {
-        UpdateBar(currentPointNormalized);
+        UpdateBar(currentPointNormalized.CurrentPointNormalized);
     }
 
     private void UpdateBar(float currentPointNormalized)
     {
-        bar.fillAmount = currentPointNormalized/3;
+        bar.fillAmount = math.clamp(currentPointNormalized/3, 0f, 1f);
     }
     private void UpdateTextCombo(int combo, Enum.PointTouchType hitType)
     {

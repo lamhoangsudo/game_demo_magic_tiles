@@ -14,13 +14,13 @@ public class LevelManager : MonoBehaviour
     public Enum.LevelState levelState { get; private set; }
     [SerializeField] private DestroyLine destroyLine;
     [SerializeField] private ScoringLine scoringLine;
-    [SerializeField] private AudioSource audioSource;
     private List<Collider2D> colliderInside;
 
     public event EventHandler OnLevelFinished;
     public event EventHandler<bool> OnLevelPauseAndUnPause;
     public event EventHandler<bool> OnLevelCountDown;
     public event EventHandler OnLevelStartPlaying;
+    //public event EventHandler OnDebug;
 
     private void Start()
     {
@@ -60,6 +60,9 @@ public class LevelManager : MonoBehaviour
 
     private void DestroyLine_OnTileTougchDestroyLine(object sender, EventArgs e)
     {
+        //OnDebug?.Invoke(this, EventArgs.Empty);
+        //totalNode--;
+        //IsAllNotesGone = totalNode == 0;
         levelState = Enum.LevelState.Finished;
     }
 
@@ -88,7 +91,7 @@ public class LevelManager : MonoBehaviour
                 break;
             case Enum.LevelState.Playing:
                 Time.timeScale = 1;
-                IsMusicFinished = audioSource.time >= audioSource.clip.length;
+                IsMusicFinished = Singleton.InstanceAudioManager.IsSongFinished();
                 if (IsMusicFinished && IsAllNotesGone)
                 {
                     levelState = Enum.LevelState.Finished;
@@ -101,11 +104,6 @@ public class LevelManager : MonoBehaviour
             case Enum.LevelState.Pause:
                 break;
         }
-    }
-
-    public string GetStringPoint()
-    {
-        return $"Score: {Singleton.InstanceGameScoreManager.currentPoint}/{Singleton.InstanceGameScoreManager.sumPointPerfect}";
     }
 
     public void OnPause()
