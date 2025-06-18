@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     private bool IsMusicFinished;
     private bool IsAllNotesGone;
-    public int totalNode;
+    private int totalNode;
     private bool isPause;
     [SerializeField] private float CountDownTimeMax;
     public float time { get; private set; }
@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour
     {
         foreach (var tile in tileTouchData)
         {
+            // Check if the tile's collider is in the list of colliders inside the scoring line
             if (colliderInside.Contains(tile.GetComponent<Collider2D>()))
             {
                 totalNode--;

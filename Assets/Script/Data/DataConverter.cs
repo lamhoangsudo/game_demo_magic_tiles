@@ -13,6 +13,7 @@ public class DataConverter : MonoBehaviour
     {
         if (IsJson)
         {
+            // Read JSON file from StreamingAssets folder
             string path = Path.Combine(Application.streamingAssetsPath, "judas_map.json");
             if (File.Exists(path))
             {
@@ -22,7 +23,7 @@ public class DataConverter : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Không tìm thấy file JSON trong StreamingAssets!");
+                Debug.LogError(" not found file json");
             }
         }
         else

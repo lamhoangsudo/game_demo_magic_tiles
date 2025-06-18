@@ -15,6 +15,7 @@ public class GameScoreManager : MonoBehaviour
     public bool CanScore { get; private set; } = false;
     private float currentPointNormalized = 0;
     public event EventHandler<float> OnScoreChange;
+    public event EventHandler<Enum.PointTouchType> OnTypeHit;
 
     private void Start()
     {
@@ -64,14 +65,17 @@ public class GameScoreManager : MonoBehaviour
             case < 0.1f:
                 //perfect
                 pontAdd = (int)Enum.PointTouchType.Perfect;
+                OnTypeHit?.Invoke(this, Enum.PointTouchType.Perfect);
                 break;
             case < 0.3f:
                 //good
                 pontAdd = (int)Enum.PointTouchType.Good;
+                OnTypeHit?.Invoke(this, Enum.PointTouchType.Good);
                 break;
-            case >= 0.5f:
+            case >= 0.3f:
                 //nomal
                 pontAdd = (int)Enum.PointTouchType.Normal;
+                OnTypeHit?.Invoke(this, Enum.PointTouchType.Normal);
                 break;
         }
         return pontAdd;
