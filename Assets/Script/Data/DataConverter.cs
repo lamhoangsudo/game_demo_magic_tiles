@@ -6,14 +6,9 @@ using Newtonsoft.Json;
 using System;
 public class DataConverter : MonoBehaviour
 {
-    public static DataConverter Instance;
     [SerializeField] private bool IsJson;
     public event EventHandler OnDataConvertedComplete;
     public List<BeatTileData> songData { get; private set; } = new List<BeatTileData>();
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-    }
     private void Start()
     {
         if (IsJson)

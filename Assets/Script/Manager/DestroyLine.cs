@@ -30,7 +30,7 @@ public class DestroyLine : MonoBehaviour
         triggerCollider.OverlapCollider(contactFilter2D, colliderInside);
         foreach (Collider2D collider in colliderInside)
         {
-            TilePoolManager.instance.ReturnTile(collider.gameObject);
+            Singleton.InstanceTilePoolManager.ReturnTile(collider.gameObject);
         }
         colliderInside.Clear();
     }

@@ -7,7 +7,7 @@ public class StartUI : MonoBehaviour
 {
     private void Start()
     {
-        PlayerInput.instance.OnStartCountDown += PlayerInput_OnStartCountDown;
+        Singleton.InstancePlayerInput.OnStartCountDown += PlayerInput_OnStartCountDown;
         ShowAndHide(true);
     }
 

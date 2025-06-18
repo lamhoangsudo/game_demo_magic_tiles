@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class GameScoreManager : MonoBehaviour
 {
-    public static GameScoreManager instance;
     public int currentPoint { get; private set; } = 0;
     private int sumPointNormal = 0;
     private int sumPointGood = 0;
@@ -17,16 +16,11 @@ public class GameScoreManager : MonoBehaviour
     private float currentPointNormalized = 0;
     public event EventHandler<float> OnScoreChange;
 
-    private void Awake()
-    {
-        if (instance == null) instance = this;
-    }
-
     private void Start()
     {
         scoringLine.OnColliderInsideChange += ScoringLine_OnColliderInsideChange;
-        PlayerInput.instance.OnTileTouched += PlayerInput_OnTileTouched;
-        LevelManager.instance.OnLevelFinished += LevelManager_OnLevelFinished;
+        Singleton.InstancePlayerInput.OnTileTouched += PlayerInput_OnTileTouched;
+        Singleton.InstanceLevelManager.OnLevelFinished += LevelManager_OnLevelFinished;
         CalculateTotalPoints();
     }
 
@@ -42,7 +36,7 @@ public class GameScoreManager : MonoBehaviour
             if (colliderInside.Contains(tile.GetComponent<Collider2D>()))
             {
                 currentPoint += EvaluateHit(tile);
-                TilePoolManager.instance.ReturnTile(tile.gameObject);
+                Singleton.InstanceTilePoolManager.ReturnTile(tile.gameObject);
             }
         }
         CalculateCurrentPointNormalized();
@@ -89,9 +83,9 @@ public class GameScoreManager : MonoBehaviour
 
     private void CalculateTotalPoints()
     {
-        sumPointNormal = (int)Enum.PointTouchType.Normal * DataConverter.Instance.songData.Count;
-        sumPointGood = (int)Enum.PointTouchType.Good * DataConverter.Instance.songData.Count;
-        sumPointPerfect = (int)Enum.PointTouchType.Perfect * DataConverter.Instance.songData.Count;
+        sumPointNormal = (int)Enum.PointTouchType.Normal * Singleton.InstanceDataConverter.songData.Count;
+        sumPointGood = (int)Enum.PointTouchType.Good * Singleton.InstanceDataConverter.songData.Count;
+        sumPointPerfect = (int)Enum.PointTouchType.Perfect * Singleton.InstanceDataConverter.songData.Count;
     }
 
     private void StarRating()

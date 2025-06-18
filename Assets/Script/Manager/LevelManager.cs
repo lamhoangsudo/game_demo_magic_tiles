@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager instance;
     private bool IsMusicFinished;
     private bool IsAllNotesGone;
     private int totalNode;
@@ -20,17 +19,12 @@ public class LevelManager : MonoBehaviour
     public event EventHandler<bool> OnLevelCountDown;
     public event EventHandler OnLevelStartPlaying;
 
-    private void Awake()
-    {
-        if (instance == null) instance = this;
-    }
-
     private void Start()
     {
         levelState = Enum.LevelState.Start;
-        totalNode = DataConverter.Instance.songData.Count;
+        totalNode =  Singleton.InstanceDataConverter.songData.Count;
         destroyLine.OnTileTougchDestroyLine += DestroyLine_OnTileTougchDestroyLine;
-        PlayerInput.instance.OnStartCountDown += PlayerInput_OnStartCountDown;
+        Singleton.InstancePlayerInput.OnStartCountDown += PlayerInput_OnStartCountDown;
         time = CountDownTimeMax;
     }
 
@@ -88,7 +82,7 @@ public class LevelManager : MonoBehaviour
 
     public string GetStringPoint()
     {
-        return $"Score: {GameScoreManager.instance.currentPoint}/{GameScoreManager.instance.sumPointPerfect}";
+        return $"Score: {Singleton.InstanceGameScoreManager.currentPoint}/{Singleton.InstanceGameScoreManager.sumPointPerfect}";
     }
 
     public void OnPause()

@@ -13,7 +13,7 @@ public class GamePauseUI : MonoBehaviour
     {
         resumeButton.onClick.AddListener(() =>
         {
-            LevelManager.instance.OnPause();
+            Singleton.InstanceLevelManager.OnPause();
             ShowAndHide(false);
         });
         restartButton.onClick.AddListener(() =>
@@ -25,7 +25,7 @@ public class GamePauseUI : MonoBehaviour
             LoadScene.Load(Enum.Scene.MainMenuScene);
         });
         ShowAndHide(false);
-        LevelManager.instance.OnLevelPauseAndUnPause += LevelManager_OnLevelPauseAndUnPause;
+        Singleton.InstanceLevelManager.OnLevelPauseAndUnPause += LevelManager_OnLevelPauseAndUnPause;
     }
 
     private void LevelManager_OnLevelPauseAndUnPause(object sender, bool check)

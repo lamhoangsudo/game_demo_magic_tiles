@@ -12,9 +12,9 @@ public class LevelUI : MonoBehaviour
     {
         ButtonPause.onClick.AddListener(() =>
         {
-            LevelManager.instance.OnPause();
+            Singleton.InstanceLevelManager.OnPause();
         });
-        GameScoreManager.instance.OnScoreChange += GameScoreManager_OnScoreChange;
+        Singleton.InstanceGameScoreManager.OnScoreChange += GameScoreManager_OnScoreChange;
     }
 
     private void GameScoreManager_OnScoreChange(object sender, float currentPointNormalized)

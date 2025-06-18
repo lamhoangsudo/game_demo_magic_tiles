@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public static SpawnManager instance;
     [SerializeField] private List<Transform> spawnPosition;
     [SerializeField] private TileDataSO tile;
     [SerializeField] private AudioSource audioSource;
@@ -14,16 +13,11 @@ public class SpawnManager : MonoBehaviour
     private Vector3 currentSpawnPosition = Vector3.zero;
     private Vector3 lastSpawnPosition = Vector3.zero;
 
-    private void Awake()
-    {
-        if (instance == null) instance = this;
-    }
-
     private void Start()
     {
-        LevelManager.instance.OnLevelStartPlaying += LevelManager_OnLevelStartPlaying;
-        LevelManager.instance.OnLevelPauseAndUnPause += LevelManager_OnLevelPauseAndUnPause;
-        songData = DataConverter.Instance.songData;
+        Singleton.InstanceLevelManager.OnLevelStartPlaying += LevelManager_OnLevelStartPlaying;
+        Singleton.InstanceLevelManager.OnLevelPauseAndUnPause += LevelManager_OnLevelPauseAndUnPause;
+        songData = Singleton.InstanceDataConverter.songData;
     }
 
     private void LevelManager_OnLevelPauseAndUnPause(object sender, bool isLevelPlaying)
@@ -62,7 +56,7 @@ public class SpawnManager : MonoBehaviour
             currentSpawnPosition = spawnPosition[songData[currentTileIndex].lane].position;
         }
         while(currentSpawnPosition == lastSpawnPosition);
-        GameObject tile = TilePoolManager.instance.GetTile();
+        GameObject tile = Singleton.InstanceTilePoolManager.GetTile();
         tile.transform.position = currentSpawnPosition;
         lastSpawnPosition = currentSpawnPosition;
     }

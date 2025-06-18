@@ -14,7 +14,7 @@ public class CountDownUI : MonoBehaviour
     private void Start()
     {
         animator = countDownText.gameObject.GetComponent<Animator>();
-        LevelManager.instance.OnLevelCountDown += LevelManager_OnLevelCountDown;
+        Singleton.InstanceLevelManager.OnLevelCountDown += LevelManager_OnLevelCountDown;
         ShowAndHide(false);
     }
 
@@ -25,7 +25,7 @@ public class CountDownUI : MonoBehaviour
 
     private void Update()
     {
-        int numberCountDown = Mathf.CeilToInt(LevelManager.instance.time);
+        int numberCountDown = Mathf.CeilToInt(Singleton.InstanceLevelManager.time);
         if (lastNumber != numberCountDown)
         {
             lastNumber = numberCountDown;

@@ -7,30 +7,25 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public static PlayerInput instance;
     [SerializeField] private LayerMask layerMask;
     private bool isHit = false;
     public event EventHandler<List<TileData>> OnTileTouched;
     public event EventHandler OnStartCountDown;
     [SerializeField] private GameObject hitEffect;
-    private void Awake()
-    {
-        if (instance == null) instance = this;
-    }
 
     private void Update()
     {
-        if(isHit && !GameScoreManager.instance.CanScore) return;
+        if(isHit && !Singleton.InstanceGameScoreManager.CanScore) return;
         foreach(Touch touch in Input.touches)
         {
             if (touch.phase == TouchPhase.Began)
             {
-                if(LevelManager.instance.levelState == Enum.LevelState.Start)
+                if(Singleton.InstanceLevelManager.levelState == Enum.LevelState.Start)
                 {
                     OnStartCountDown?.Invoke(this, EventArgs.Empty);
                     return;
                 }
-                if(LevelManager.instance.levelState != Enum.LevelState.Playing) return;
+                if(Singleton.InstanceLevelManager.levelState != Enum.LevelState.Playing) return;
                 Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 List<RaycastHit2D> raycastHit2DS = Physics2D.RaycastAll(touchPosition, Vector2.zero, 999f, layerMask).ToList();
                 if (raycastHit2DS.Count <= 0 || raycastHit2DS.IsUnityNull()) return;
@@ -55,6 +50,5 @@ public class PlayerInput : MonoBehaviour
         }
         OnTileTouched?.Invoke(this, tileDatas);
         isHit = true;        
-        Debug.Log("hit");
     }
 }

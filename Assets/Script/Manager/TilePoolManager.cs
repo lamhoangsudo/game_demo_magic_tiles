@@ -4,7 +4,6 @@ using UnityEngine.Pool;
 
 public class TilePoolManager : MonoBehaviour
 {
-    public static TilePoolManager instance;
     [SerializeField] private TileDataSO tile;
     [SerializeField] private int initialPoolSize = 10;
     [SerializeField] private int maxPoolSize = 20;
@@ -13,7 +12,6 @@ public class TilePoolManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) instance = this;
         tilePool = new ObjectPool<GameObject>(
             createFunc: CreateTile,
             actionOnGet: OnGetTile,
