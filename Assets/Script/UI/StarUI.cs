@@ -10,9 +10,10 @@ public class StarUI : MonoBehaviour
     [SerializeField] private Animator[] starIconsAnimations; // Array of star icon GameObjects
     private void Start()
     {
-        foreach (GameObject starIcon in starIcons)
+        for(int i = 0; i < starIcons.Length; i++)
         {
-            starIcon.SetActive(false);
+            starIcons[i].SetActive(false);
+            starIconsAnimations[i] = starIcons[i].GetComponent<Animator>();
         }
         Singleton.InstanceGameScoreManager.OnScoreChange += InstanceGameScoreManager_OnScoreChange;
     }

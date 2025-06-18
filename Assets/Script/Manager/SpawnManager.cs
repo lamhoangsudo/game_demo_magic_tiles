@@ -7,9 +7,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private List<Transform> spawnPositions;
     [SerializeField] private TileDataSO tile;
     private List<BeatTileData> songData;
-    public int currentTileIndex;
+    private int currentTileIndex;
     [SerializeField] private bool isRamdomSpawned = false;
-    public bool isLevelPlaying = false;
+    private bool isLevelPlaying = false;
     private Vector3 spawnPosition = Vector3.zero;
 
     private void Start()
