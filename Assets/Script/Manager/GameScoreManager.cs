@@ -36,7 +36,6 @@ public class GameScoreManager : MonoBehaviour
             if (colliderInside.Contains(tile.GetComponent<Collider2D>()))
             {
                 currentPoint += EvaluateHit(tile);
-                Singleton.InstanceTilePoolManager.ReturnTile(tile.gameObject);
             }
         }
         CalculateCurrentPointNormalized();
@@ -70,12 +69,9 @@ public class GameScoreManager : MonoBehaviour
                 //good
                 pontAdd = (int)Enum.PointTouchType.Good;
                 break;
-            case < 0.5f:
+            case >= 0.5f:
                 //nomal
                 pontAdd = (int)Enum.PointTouchType.Normal;
-                break;
-            case >= 1f:
-                //miss
                 break;
         }
         return pontAdd;

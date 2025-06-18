@@ -6,7 +6,6 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private List<Transform> spawnPosition;
     [SerializeField] private TileDataSO tile;
-    [SerializeField] private AudioSource audioSource;
     [SerializeField] private List<BeatTileData> songData;
     [SerializeField] private int currentTileIndex;
     private bool isLevelPlaying = false;
@@ -23,26 +22,16 @@ public class SpawnManager : MonoBehaviour
     private void LevelManager_OnLevelPauseAndUnPause(object sender, bool isLevelPlaying)
     {
         this.isLevelPlaying = isLevelPlaying;
-        if(isLevelPlaying)
-        {
-            audioSource.Pause();
-            
-        }
-        else
-        {
-            audioSource.UnPause();
-        }
     }
 
     private void LevelManager_OnLevelStartPlaying(object sender, System.EventArgs e)
     {
-        audioSource.Play();
         isLevelPlaying = true;
     }
 
     private void Update()
     {
-        if(currentTileIndex < songData.Count && audioSource.time >= songData[currentTileIndex].time && isLevelPlaying)
+        if(currentTileIndex < songData.Count && Singleton.InstanceAudioManager.GetAudioTime() >= songData[currentTileIndex].time && isLevelPlaying)
         {
             SpawnTile(currentTileIndex);
             currentTileIndex++;

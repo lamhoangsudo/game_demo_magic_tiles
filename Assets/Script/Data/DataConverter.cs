@@ -9,7 +9,7 @@ public class DataConverter : MonoBehaviour
     [SerializeField] private bool IsJson;
     public event EventHandler OnDataConvertedComplete;
     public List<BeatTileData> songData { get; private set; } = new List<BeatTileData>();
-    private void Start()
+    private void Awake()
     {
         if (IsJson)
         {

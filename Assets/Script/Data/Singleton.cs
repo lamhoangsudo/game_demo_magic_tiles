@@ -11,6 +11,7 @@ public class Singleton : MonoBehaviour
     public static PlayerInput InstancePlayerInput;
     public static SpawnManager InstanceSpawnManager;
     public static TilePoolManager InstanceTilePoolManager;
+    public static AudioManager InstanceAudioManager;
     private void Awake()
     {
         if(Instance == null)
@@ -27,5 +28,6 @@ public class Singleton : MonoBehaviour
         InstancePlayerInput = (PlayerInput)GameObject.FindFirstObjectByType(typeof(PlayerInput));
         InstanceSpawnManager = (SpawnManager)GameObject.FindFirstObjectByType(typeof(SpawnManager));
         InstanceTilePoolManager = (TilePoolManager)GameObject.FindFirstObjectByType(typeof(TilePoolManager));
+        InstanceAudioManager = (AudioManager)GameObject.FindFirstObjectByType(typeof(AudioManager));
     }
 }
