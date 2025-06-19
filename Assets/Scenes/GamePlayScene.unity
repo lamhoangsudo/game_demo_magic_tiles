@@ -2522,7 +2522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ac3ff9255f5fc43af3a094a3829b15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsJson: 1
+  jsonFileName: judas_map
 --- !u!114 &858428803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4375,9 +4375,7 @@ MonoBehaviour:
   - {fileID: 1526157076}
   - {fileID: 404660532}
   tile: {fileID: 11400000, guid: e6ff7fd3deb61ae4787473f9fdec068b, type: 2}
-  currentTileIndex: 0
   isRamdomSpawned: 0
-  isLevelPlaying: 0
 --- !u!114 &1739196098
 MonoBehaviour:
   m_ObjectHideFlags: 0
